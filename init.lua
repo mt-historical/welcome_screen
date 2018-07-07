@@ -1,6 +1,6 @@
 welcome_screen = {}
 
-local input = io.open(minetest.get_modpath("welcome_screen") .. "/rules.conf", "r")
+local input = io.open(minetest.get_modpath("welcome_screen") .. "/rules.lua", "r")
 
 if input then
 	dofile(minetest.get_modpath("welcome_screen") .. "/rules.lua")
