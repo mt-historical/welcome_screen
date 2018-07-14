@@ -21,5 +21,4 @@ file still can summon this window without accepting the rules for the second tim
 
 #### Credit
 * Licensed under WTFPL.
-* Thanks to Lowenkrieger for fixing my terrible grammar in rules.lua_example.
- 
+

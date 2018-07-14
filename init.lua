@@ -68,10 +68,14 @@ minetest.register_chatcommand("rules",{
 	description = "Shows the server rules",
 	privs = {shout = true},
 	func = function (name,params)
-        if not minetest.get_player_privs(name).interact then
-            minetest.show_formspec(name, "welcome_screen_initial", welcome_screen.formspec_initial)
-        else
-            minetest.show_formspec(name, "welcome_screen_agreed", welcome_screen.formspec_agreed)
+        local privs = minetest.get_player_privs(name)
+        for _,priv in pairs(welcome_screen.grant_privs) do
+            if not privs[priv] then
+                minetest.show_formspec(name, "welcome_screen_initial", welcome_screen.formspec_initial)
+                break
+            else
+                minetest.show_formspec(name, "welcome_screen_agreed", welcome_screen.formspec_agreed)
+            end
         end
 	end
 })
