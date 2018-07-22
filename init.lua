@@ -63,20 +63,39 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	end
 end)
 
+welcome_screen.show_rules = function(name)
+    local privs = ""
+    local user = ""
+    if type(name) ~= "string" and name:is_player() then
+        user = name:get_player_name()
+        privs = minetest.get_player_privs(user)
+    else
+        privs = minetest.get_player_privs(name)
+        user = name
+    end
+    for _,priv in pairs(welcome_screen.grant_privs) do
+        if not privs[priv] then
+            minetest.show_formspec(user, "welcome_screen_initial", welcome_screen.formspec_initial)
+            break
+        else
+            minetest.show_formspec(user, "welcome_screen_agreed", welcome_screen.formspec_agreed)
+        end
+    end
+end
+
 minetest.register_chatcommand("rules",{
 	params = "",
 	description = "Shows the server rules",
 	privs = {shout = true},
-	func = function (name,params)
-        local privs = minetest.get_player_privs(name)
-        for _,priv in pairs(welcome_screen.grant_privs) do
-            if not privs[priv] then
-                minetest.show_formspec(name, "welcome_screen_initial", welcome_screen.formspec_initial)
-                break
-            else
-                minetest.show_formspec(name, "welcome_screen_agreed", welcome_screen.formspec_agreed)
-            end
-        end
-	end
+	func = welcome_screen.show_rules
 })
 
+if minetest.get_modpath("sfinv_buttons") then
+    sfinv_buttons.register_button("welcome_screen_button", 
+    {
+    title = "Server Rules",
+    action = welcome_screen.show_rules,
+    tooltip = "Show server rules",
+    image = "rules_thumbnail.png",
+    })
+end
