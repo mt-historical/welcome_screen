@@ -57,7 +57,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
             privs[priv] = true
             minetest.set_player_privs(name, privs)
         end
-        minetest.log("action", "" .. name .. "Agreed to the rules")
+        minetest.log("action", "[Welcome Screen]: " .. name .. " agreed to the rules")
     elseif fields.quit or fields.decline then
         minetest.show_formspec(name, "welcome_screen_warn", welcome_screen.formspec_warning)
 	end

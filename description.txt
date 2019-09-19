@@ -1,0 +1,1 @@
+A simple welcome screen mod with an option to grant privileges
